@@ -30,7 +30,7 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
   parseInt(percent, contribution, amount);
   if (Number.isNaN(percent) || Number.isNaN(contribution) || Number.isNaN(amount)) {
-    alert("Не верный формат ввода");
+    alert("Параметр <название параметра> содержит неправильное значение <значение параметра>");
   }
 
   function monthDiff(currentDay, date) {
