@@ -8,12 +8,12 @@ function solveEquation(a, b, c) {
     x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
     x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
 
-    arr = [ x1, x2 ];
+    arr = [x1, x2];
     return arr;
   } else if (discriminant === 0) {
     x1 = x2 = -b / (2 * a);
 
-    arr = [ x1 ];
+    arr = [x1];
     return arr;
   } else {
     arr = [];
@@ -26,16 +26,12 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   let totalAmount;
   let currentDay = new Date();
   let months;
-  let dateCheck;
+  let amountLeft = amount - contribution;
 
-  function typeCheck(percent, contribution, amount) {
-    parseInt(percent, contribution, amount);
-    if (Number.isNaN(percent) || Number.isNaN(contribution) || Number.isNaN(amount)) {
-      alert("Не верный формат ввода");
-    }
+  parseInt(percent, contribution, amount);
+  if (Number.isNaN(percent) || Number.isNaN(contribution) || Number.isNaN(amount)) {
+    alert("Не верный формат ввода");
   }
-
-  typeCheck(percent, contribution, amount);
 
   function monthDiff(currentDay, date) {
     months = (date.getFullYear() - currentDay.getFullYear()) * 12;
@@ -44,19 +40,14 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
     return months <= 0 ? 0 : months;
   }
 
+  let dateCheck;
   dateCheck = monthDiff(currentDay, date);
 
-  function calc() {
-    let payment;
-    let amountLeft = amount - contribution;
-    let percentMonthly = percent / 12;
+  let percentMonthly = (percent / 100) / 12;
+  let payment = amountLeft * (percentMonthly + (percentMonthly / ((Math.pow((1 + percentMonthly), months)) - 1)));
+  totalAmount = payment * months;
 
-    payment = amountLeft * (percentMonthly + (percentMonthly / (((1 + percentMonthly) ^ months) - 1)));
+  console.log(totalAmount);
 
-    totalAmount = payment * months;
-
-    return totalAmount;
-  }
-
-  calc();
+  return totalAmount.toFixed(2);
 }
