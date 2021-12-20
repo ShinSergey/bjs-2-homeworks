@@ -28,10 +28,14 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   let months;
   let amountLeft = amount - contribution;
 
-  parseInt(percent, contribution, amount);
-  if (Number.isNaN(percent) || Number.isNaN(contribution) || Number.isNaN(amount)) {
-    alert("Параметр <название параметра> содержит неправильное значение <значение параметра>");
-  }
+    parseInt(percent, contribution, amount);
+    if (isNaN(percent)) {
+      return("Параметр \"Процентная ставка\" содержит неправильное значение \"" + percent + "\"");
+    } else if (isNaN(contribution)) {
+      return("Параметр \"Начальный взнос\" содержит неправильное значение \"" + contribution + "\"");
+    } else if (isNaN(amount)) {
+      return("Параметр \"Общая стоимость\" содержит неправильное значение \"" + amount + "\"");
+    }
 
   function monthDiff(currentDay, date) {
     months = (date.getFullYear() - currentDay.getFullYear()) * 12;
@@ -47,7 +51,9 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   let payment = amountLeft * (percentMonthly + (percentMonthly / ((Math.pow((1 + percentMonthly), months)) - 1)));
   totalAmount = payment * months;
 
-  console.log(totalAmount);
+  totalAmount = totalAmount.toFixed(2);
 
-  return totalAmount.toFixed(2);
+  console.log(parseFloat(totalAmount));
+
+  return parseFloat(totalAmount);
 }
