@@ -15,8 +15,7 @@ function getArrayParams(arr) {
     }
   }
 
-  avg = sum / arr.length;
-  avg = avg.toFixed(2);
+  avg = (sum/arr.length).toFixed(2)
 
   console.log({ min: min, max: max, avg: parseFloat(avg) });
   return { min: min, max: max, avg: parseFloat(avg) };
@@ -66,9 +65,9 @@ function worker2(arr) {
     }
   }
 
-  let abs = max - min;
+  let abs;
 
-  return abs = Math.abs(abs);
+  return abs = Math.abs(max - min);
 }
 
 makeWork(meat, worker2);
