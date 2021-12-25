@@ -10,14 +10,13 @@ function getArrayParams(arr) {
     if (arr[i] > max) {
       max = arr[i];
     }
-    else if (arr[i] < min) {
+    if (arr[i] < min) {
       min = arr[i];
     }
   }
 
   avg = sum / arr.length;
   avg = avg.toFixed(2);
-  Math.abs(avg);
 
   console.log({ min: min, max: max, avg: parseFloat(avg) });
   return { min: min, max: max, avg: parseFloat(avg) };
@@ -47,7 +46,7 @@ function makeWork(arrOfArr, func) {
       max = thisFunc;
     }
   }
-  
+
   return max;
 }
 
@@ -58,16 +57,18 @@ function worker2(arr) {
   let min = arr[0];
   let max = min;
 
-  for (i = 1; i < arr.length; ++i) {
-      if (arr[i] > max) max = arr[i];
-      if (arr[i] < min) min = arr[i];
+  for (let i = 1; i < arr.length; ++i) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+    if (arr[i] < min) {
+      min = arr[i];
+    }
   }
 
   let abs = max - min;
 
-  Math.abs(abs);
-
-  return abs;
+  return abs = Math.abs(abs);
 }
 
 makeWork(meat, worker2);
