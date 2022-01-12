@@ -1,10 +1,7 @@
-function compareArrays(arr1, arr2) {
-  
-  if (arr1.length === arr2.length && arr1.every(callback => callback === arr2[index])) {
-    return true;
-  } else {
-    return false;
-  }
+function compareArrays(arr1, arr2) {  
+
+  return arr1.length === arr2.length &&
+  arr1.every((element, index) => element === arr2[index]);
 }
 
   function advancedFilter(arr) {
