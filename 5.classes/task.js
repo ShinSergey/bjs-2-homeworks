@@ -92,9 +92,10 @@ class Library {
     giveBookByName(bookName) {
         if (this.books.find(findBook => findBook.name === bookName)) {
             let index = this.books.findIndex(findIndex => findIndex.name === bookName);
-            this.books.splice(index, 1);
-            return bookName || null
+            let searchedBook = this.books.splice(index, 1);
+            return searchedBook[0] || null;
         }
+
     }
 }
 
@@ -115,9 +116,10 @@ class Student {
     addMark(mark, subjectName) {
         if (mark < 1 || mark > 5) {
             return "Ошибка, оценка должна быть числом от 1 до 5";
-        } else if (this.subject.hasOwnProperty(subjectName) !== true) {
-            return "Несуществующий предмет";
-        } else {
+        } else if (this.subject.hasOwnProperty(subjectName) !== true || this.hasOwnProperty(subject) !== true) {
+            this.setSubject(subjectName);
+            this.subject.subjectName.push(mark) ;
+        } else  {
             this.subject.subjectName.push(mark);
         }
     }
