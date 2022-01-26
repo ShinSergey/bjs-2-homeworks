@@ -6,16 +6,14 @@ function parseCount(toParse) {
     return parsed;
 }
 
-function validateCount(toParse) {
+function validateCount(Parse) {
     try {
-        parseCount(toParse);
+        return parseCount(Parse);
     } catch (e) {
-        throw Error("Невалидное значение");
+        return e;
     }
 
 }
-
-console.log(validateCount("fgdhfghdftgh"));
 
 class Triangle {
     constructor(a, b, c) {
@@ -28,25 +26,28 @@ class Triangle {
     }
 
     getPerimeter() {
-        return (a + b + c).toFixed(3);
+        let perimeter = (this.a + this.b + this.c);
+        return perimeter;
     }
 
     getArea() {
-        let semi = 0.5 * (a + b + c);
-        return Math.sqrt(semi * (semi - a) * (semi - b) * (semi - c)).toFixed(3);
+        let semi = 0.5 * this.getPerimeter();
+        let result = Math.sqrt(semi * (semi - this.a) * (semi - this.b) * (semi - this.c)).toFixed(3);
+        return Number.parseFloat(result);
     }
 }
 
 function getTriangle(a, b, c) {
-    if (a + b < c || a + c < b || b + c < a) {
-        throw {
-            getPerimeter() {
+    try {
+        return new Triangle(a, b, c);
+    } catch (e) {
+        return {
+            getArea() {
                 return "Ошибка! Треугольник не существует";
             },
-        
-            getArea() {
-                
+            getPerimeter() {
                 return "Ошибка! Треугольник не существует";
             }
         };
-} else return 
+    }
+}
