@@ -91,11 +91,11 @@ class Library {
 
     giveBookByName(bookName) {
         let index = this.books.findIndex(findIndex => findIndex.name === bookName);
-        if (index === true) {
+        if (index === -1) {
+            return null;
+        } else {
             let searchedBook = this.books.splice(index, 1);
             return searchedBook[0];
-        } else if (index === -1) {
-            return null;
         }
     }
 }
@@ -111,52 +111,51 @@ class Student {
     setSubject(subjectName) {
         if (this.subject === undefined) {
             this.subject = {};
-            this.subject.subjectName = [];
+            this.subject[subjectName] = [];
         } else if (this.subject.hasOwnProperty(subjectName) !== true) {
-            this.subject.subjectName = [];
+            this.subject[subjectName] = [];
         }
     }
 
     addMark(mark, subjectName) {
         if (mark < 1 || mark > 5) {
             return "Ошибка, оценка должна быть числом от 1 до 5";
-        } else if (this.hasOwnProperty(subject) !== true || this.subject.hasOwnProperty(subjectName) !== true) {
+        } else if (this.hasOwnProperty("subject") !== true || this.subject.hasOwnProperty(subjectName) !== true) {
             this.setSubject(subjectName);
-            this.subject.subjectName.push(mark);
+            this.subject[subjectName].push(mark);
         } else {
-            this.subject.subjectName.push(mark);
+            this.subject[subjectName].push(mark);
         }
     }
 
     getAverageBySubject(subjectName) {
         let sum = 0;
         if (subjectName in this.subject) {
-            this.subject.subjectName.map(element => sum += element);
+            this.subject[subjectName].map(element => sum += element);
         } else {
             return 'Несуществующий предмет';
         }
-        return sum / this.subject.subjectName.length;
+        return sum / this.subject[subjectName].length;
     }
 
     getAverage() {
         let sum = 0;
+        let count = 0;
         for (let i in this.subject) {
             this.subject[i].map(
                 element => {
                     sum += element;
+                    count += 1;
                 });
         }
-        return sum / this.subject[i].length;
+        return sum / count;
     }
 }
 
 const student = new Student("Олег Никифоров");
+
+student.addMark(3, "algebra");
 student.addMark(5, "algebra");
-student.addMark(5, "algebra");
-student.addMark(5, "geometry");
-student.addMark(4, "geometry");
-student.addMark(6, "geometry"); // "Ошибка, оценка должна быть числом от 1 до 5"
-student.getAverageBySubject("geometry"); // Средний балл по предмету geometry 4.5
-student.getAverageBySubject("biology"); // Несуществующий предмет
-student.getAverage(); // Средний балл по всем предметам 4.75
-student.exclude("Исключен за попытку подделать оценки");
+student.addMark(5, "history");
+student.addMark(5, "history");
+student.getAverage();
