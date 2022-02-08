@@ -6,17 +6,16 @@ function cachingDecoratorNew(func) {
     let hash = args.join(",");
     console.log(Object.keys(cache).length);
     if (hash in cache) {
-      if (Object.keys(cache).length === 5) {
-        delete cache[Object.keys(cache)[0]];
-      }
       console.log("Из кеша: " + cache[hash]);
       return ("Из кеша: " + cache[hash]);
-    } else {
-      let result = func.call(this, ...args);
-      cache[hash] = result;
-      console.log("Вычисляем: " + result);
-      return ("Вычисляем: " + result);
     }
+    if (Object.keys(cache).length === 5) {
+      delete cache[Object.keys(cache)[0]];
+    }
+    let result = func.call(this, ...args);
+    cache[hash] = result;
+    console.log("Вычисляем: " + result);
+    return ("Вычисляем: " + result);
   }
   return wrapper;
 }
@@ -36,7 +35,6 @@ upgradedAddThree(1, 2, 3);
 
 function debounceDecoratorNew(f, ms) {
   let timeout;
-
   return function (...args) {
     if (timeout) {
       clearTimeout(timeout);
@@ -44,11 +42,9 @@ function debounceDecoratorNew(f, ms) {
         f.apply(this, args);
       }, ms);
     } else {
-      timeout = setTimeout(() => {
-        f.apply(this, args);
-      });
+      clearTimeout(timeout);
+      f.apply(this, args);
     }
-
   }
 }
 
@@ -65,7 +61,7 @@ setTimeout(upgradedSendSignal, 4500); // Сигнал будет отправл�
 function debounceDecorator2(f, ms) {
   let timeout;
    function wrapper(...args) {
-    wrapper.history.push(args)
+    wrapper.count = wrapper.count + 1;
     if (timeout) {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
@@ -77,7 +73,7 @@ function debounceDecorator2(f, ms) {
       });
     }
   }
-  wrapper.history = [];
+  wrapper.count = null;
   return wrapper;
 
 }
