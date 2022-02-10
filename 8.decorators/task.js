@@ -35,15 +35,16 @@ upgradedAddThree(1, 2, 3);
 
 function debounceDecoratorNew(f, ms) {
   let timeout;
+  let first = "on";
   return function (...args) {
-    if (timeout) {
+    if (first === "off") {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         f.apply(this, args);
       }, ms);
     } else {
-      clearTimeout(timeout);
-      f.apply(this, args);
+      first = "off";
+      timeout = f.apply(this, args);
     }
   }
 }
@@ -60,22 +61,21 @@ setTimeout(upgradedSendSignal, 4500); // Сигнал будет отправл�
 
 function debounceDecorator2(f, ms) {
   let timeout;
-   function wrapper(...args) {
-    wrapper.count = wrapper.count + 1;
-    if (timeout) {
+  let first = "on";
+  function wrapper(...args) {
+    wrapper.count++;
+    if (first === "off") {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         f.apply(this, args);
       }, ms);
     } else {
-      timeout = setTimeout(() => {
-        f.apply(this, args);
-      });
-    }
+      first = "off";
+      timeout = f.apply(this, args);
+    };
   }
-  wrapper.count = null;
+  wrapper.count = 0;
   return wrapper;
-
 }
 
 const sendSignal2 = () => console.log("Сигнал 2 отправлен");
